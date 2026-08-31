@@ -81,7 +81,7 @@ function whatsappNumber(value) {
 }
 
 function mapsUrl(profile) {
-  if (profile.addresslink) {
+  if (profile.address) {
     return `https://maps.app.goo.gl/oAwfcawXmEtwf24k6`;
   }
   return "";
