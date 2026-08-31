@@ -16,9 +16,9 @@ Standalone HTML/CSS/JavaScript implementation of a premium NFC digital business 
 Put the real image files in:
 
 ```text
-assets/profile/rajesh-sharma.jpg
-assets/logos/abc-technologies.png
-assets/business-cards/rajesh-sharma.png
+assets/profile/parishar.jpeg
+assets/logos/business_logo.png
+assets/business-cards/business_card.png
 ```
 
 Then update the paths in `script.js` if your filenames differ.
@@ -26,7 +26,7 @@ Then update the paths in `script.js` if your filenames differ.
 The business card feature DOES NOT generate a new card. It downloads/shares the existing image file listed in:
 
 ```js
-businessCardImage: "assets/business-cards/rajesh-sharma.png"
+businessCardImage: "assets/business-cards/business_card.png"
 ```
 
 ## Creating another professional
@@ -36,7 +36,7 @@ Create another profile entry or replace the current `businessProfile` object.
 Example:
 
 ```js
-businessCardImage: "assets/business-cards/sita-thapa.png"
+businessCardImage: "assets/business-cards/business_card.png"
 ```
 
 The same UI remains unchanged.
@@ -46,9 +46,7 @@ The same UI remains unchanged.
 For a larger deployment, map URL slugs to profile data:
 
 ```text
-/profile/rajesh
-/profile/sita
-/profile/john
+/profile/parishar_rajbhandari
 ```
 
 With plain HTML/JS this requires your hosting/server to route those URLs to the same page. The current UI is already data-driven so the same components can render any profile.
