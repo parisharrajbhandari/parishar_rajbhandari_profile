@@ -21,7 +21,7 @@ const businessProfile = {
     "We provide premium range of Curtains, carpets, vinyl parquets, laminate parquets, mattress, rugs etc to decorate your home and office.",
 
   phone: "+977 9855017454",
-  whatsapp: "+977 98855017454",
+  whatsapp: "98855017454",
   email: "rajbhandariparishar@gmail.com",
   website: "https://example.com",
 
