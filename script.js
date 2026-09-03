@@ -5,6 +5,7 @@
   to create a new professional profile.
 */
 
+
 const businessProfile = {
   slug: "parishar-rajbhandari",
 
@@ -23,14 +24,21 @@ const businessProfile = {
   phone: "+977 9855017454",
   whatsapp: "9855017454",
   email: "rajbhandariparishar@gmail.com",
-  website: "https://parishar-rajbhandari-profile.vercel.app",
+
+  website:
+    "https://parishar-rajbhandari-profile.vercel.app",
 
   address: "Chitwan, Nepal",
 
-  instagram: "https://www.instagram.com/parishar_rajbhandari_/?hl=en",
-  facebook: "https://www.facebook.com/parishar.rajbhandari.7",
+  instagram:
+    "https://www.instagram.com/parishar_rajbhandari_/?hl=en",
+
+  facebook:
+    "https://www.facebook.com/parishar.rajbhandari.7",
+
   linkedin:
     "https://www.linkedin.com/in/parishar-rajbhandari-00531541b/",
+
   youtube: "",
   tiktok: "",
 
@@ -46,55 +54,92 @@ const businessProfile = {
 
   /*
     Existing visiting-card image.
+    This is used only for the business-card
+    download/share feature.
   */
-  businessCardImage: "assets/business-cards/business_card.png",
+  businessCardImage:
+    "assets/business-cards/business_card.png",
 
   /*
-    Optional photo used inside the vCard.
-    If this image cannot be fetched, the vCard
-    will still be generated without the photo.
+    This property is kept in your profile data
+    but is NOT fetched during Save Contact.
+
+    This is intentional.
+
+    Fetching the image can introduce an asynchronous
+    operation that interferes with mobile browser
+    user-gesture restrictions.
   */
-  vcardPhoto: "assets/profile/business_card.jpg"
+  vcardPhoto:
+    "assets/profile/business_card.jpg"
 };
 
 
 /* =========================================================
-   GLOBALS
+   BASIC HELPER
 ========================================================= */
 
-const $ = (selector) => document.querySelector(selector);
-
-/*
-  This stores the prepared vCard so the Save Contact button
-  does not need to perform an async operation after the tap.
-*/
-let preparedVCard = "";
-let preparingVCard = false;
+const $ = (selector) => {
+  try {
+    return document.querySelector(selector);
+  } catch {
+    return null;
+  }
+};
 
 
 /* =========================================================
-   BASIC HELPERS
+   SAFE TEXT
 ========================================================= */
 
 function setText(selector, value) {
   const el = $(selector);
-  if (el) el.textContent = value || "";
+
+  if (el) {
+    el.textContent = value || "";
+  }
 }
 
+
+/* =========================================================
+   HIDE ELEMENT
+========================================================= */
+
 function hideIfEmpty(id, value) {
-  const el = document.getElementById(id);
-  if (!el) return;
+  const el =
+    document.getElementById(id);
+
+  if (!el) {
+    return;
+  }
 
   el.hidden = !value;
 }
 
+
+/* =========================================================
+   PHONE
+========================================================= */
+
 function digitsOnly(value) {
-  return String(value || "").replace(/[^\d+]/g, "");
+  return String(value || "")
+    .replace(/[^\d+]/g, "");
 }
 
+
+/* =========================================================
+   WHATSAPP NUMBER
+========================================================= */
+
 function whatsappNumber(value) {
-  return String(value || "").replace(/\D/g, "");
+  return String(value || "")
+    .replace(/\D/g, "");
 }
+
+
+/* =========================================================
+   MAPS
+========================================================= */
 
 function mapsUrl(profile) {
   if (profile.address) {
@@ -104,20 +149,29 @@ function mapsUrl(profile) {
   return "";
 }
 
+
+/* =========================================================
+   SAFE FILE NAME
+========================================================= */
+
 function safeFilename(name, suffix) {
-  const base = String(name || "business-profile")
+  const base = String(
+    name || "business-profile"
+  )
     .normalize("NFKD")
     .replace(/[^\w\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-")
     .toLowerCase();
 
-  return `${base || "business-profile"}${suffix}`;
+  return (
+    `${base || "business-profile"}${suffix}`
+  );
 }
 
 
 /* =========================================================
-   SOCIALS
+   SOCIAL ENTRIES
 ========================================================= */
 
 function socialEntries(profile) {
@@ -128,117 +182,211 @@ function socialEntries(profile) {
       icon: "◎",
       url: profile.instagram
     },
+
     {
       key: "facebook",
       label: "Facebook",
       icon: "f",
       url: profile.facebook
     },
+
     {
       key: "linkedin",
       label: "LinkedIn",
       icon: "in",
       url: profile.linkedin
     },
+
     {
       key: "youtube",
       label: "YouTube",
       icon: "▶",
       url: profile.youtube
     },
+
     {
       key: "tiktok",
       label: "TikTok",
       icon: "♪",
       url: profile.tiktok
     }
-  ].filter((item) => item.url);
+  ].filter(
+    (item) => item.url
+  );
 }
 
 
 /* =========================================================
-   PROFILE RENDERING
+   RENDER PROFILE
 ========================================================= */
 
 function renderProfile(profile) {
-  document.title = `${profile.name} | ${
-    profile.company || "Business Profile"
-  }`;
 
-  setText("#name", profile.name);
-  setText("#title", profile.title);
-  setText("#company", profile.company);
-  setText("#tagline", profile.tagline);
-  setText("#phoneValue", profile.phone);
-  setText("#emailValue", profile.email);
+  document.title =
+    `${profile.name} | ${
+      profile.company ||
+      "Business Profile"
+    }`;
+
+
+  /* -----------------------------------------
+     Text
+  ----------------------------------------- */
+
+  setText(
+    "#name",
+    profile.name
+  );
+
+  setText(
+    "#title",
+    profile.title
+  );
+
+  setText(
+    "#company",
+    profile.company
+  );
+
+  setText(
+    "#tagline",
+    profile.tagline
+  );
+
+  setText(
+    "#phoneValue",
+    profile.phone
+  );
+
+  setText(
+    "#emailValue",
+    profile.email
+  );
 
   setText(
     "#websiteValue",
     profile.website
-      ? profile.website.replace(/^https?:\/\//, "")
+      ? profile.website.replace(
+          /^https?:\/\//,
+          ""
+        )
       : ""
   );
 
-  setText("#addressValue", profile.address);
-  setText("#locationText", profile.address);
-  setText("#description", profile.description);
-  setText("#footerCompany", profile.company || profile.name);
+  setText(
+    "#addressValue",
+    profile.address
+  );
+
+  setText(
+    "#locationText",
+    profile.address
+  );
+
+  setText(
+    "#description",
+    profile.description
+  );
+
+  setText(
+    "#footerCompany",
+    profile.company ||
+      profile.name
+  );
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      Profile Image
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
-  const profileImage = $("#profileImage");
+  const profileImage =
+    $("#profileImage");
 
   if (profileImage) {
-    profileImage.src = profile.profileImage;
-    profileImage.alt = `${profile.name} profile photo`;
 
-    profileImage.onerror = () => {
-      profileImage.src =
-        "data:image/svg+xml;charset=UTF-8," +
-        encodeURIComponent(
-          `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
-            <rect width="100%" height="100%" fill="#202630"/>
-            <text x="50%" y="54%"
-              dominant-baseline="middle"
-              text-anchor="middle"
-              fill="#dfe5ec"
-              font-size="120"
-              font-family="Arial">
-              ${(profile.name || "B")[0]}
-            </text>
-          </svg>`
-        );
-    };
+    profileImage.src =
+      profile.profileImage;
+
+    profileImage.alt =
+      `${profile.name} profile photo`;
+
+    profileImage.onerror =
+      () => {
+
+        profileImage.src =
+          "data:image/svg+xml;charset=UTF-8," +
+          encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
+              <rect width="100%" height="100%" fill="#202630"/>
+              <text
+                x="50%"
+                y="54%"
+                dominant-baseline="middle"
+                text-anchor="middle"
+                fill="#dfe5ec"
+                font-size="120"
+                font-family="Arial"
+              >
+                ${(profile.name || "B")[0]}
+              </text>
+            </svg>`
+          );
+      };
   }
 
 
-  /* ---------------------------------------------------------
-     Phone
-  --------------------------------------------------------- */
+  /* -----------------------------------------
+     Phone links
+  ----------------------------------------- */
 
-  const phoneHref = profile.phone
-    ? `tel:${digitsOnly(profile.phone)}`
-    : "#";
+  const phoneHref =
+    profile.phone
+      ? `tel:${digitsOnly(
+          profile.phone
+        )}`
+      : "#";
 
-  const callButton = $("#callButton");
-  const phoneCard = $("#phoneCard");
-  const ctaCallButton = $("#ctaCallButton");
-  const mobileCall = $("#mobileCall");
+  const callButton =
+    $("#callButton");
 
-  if (callButton) callButton.href = phoneHref;
-  if (phoneCard) phoneCard.href = phoneHref;
-  if (ctaCallButton) ctaCallButton.href = phoneHref;
-  if (mobileCall) mobileCall.href = phoneHref;
+  const phoneCard =
+    $("#phoneCard");
+
+  const ctaCallButton =
+    $("#ctaCallButton");
+
+  const mobileCall =
+    $("#mobileCall");
+
+  if (callButton) {
+    callButton.href =
+      phoneHref;
+  }
+
+  if (phoneCard) {
+    phoneCard.href =
+      phoneHref;
+  }
+
+  if (ctaCallButton) {
+    ctaCallButton.href =
+      phoneHref;
+  }
+
+  if (mobileCall) {
+    mobileCall.href =
+      phoneHref;
+  }
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      WhatsApp
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
-  const wa = whatsappNumber(profile.whatsapp);
+  const wa =
+    whatsappNumber(
+      profile.whatsapp
+    );
 
   const waUrl = wa
     ? `https://wa.me/${wa}?text=${encodeURIComponent(
@@ -246,69 +394,104 @@ function renderProfile(profile) {
       )}`
     : "#";
 
-  const whatsappButton = $("#whatsappButton");
-  const ctaWhatsAppButton = $("#ctaWhatsAppButton");
-  const mobileWhatsApp = $("#mobileWhatsApp");
+  const whatsappButton =
+    $("#whatsappButton");
 
-  if (whatsappButton) whatsappButton.href = waUrl;
-  if (ctaWhatsAppButton) ctaWhatsAppButton.href = waUrl;
-  if (mobileWhatsApp) mobileWhatsApp.href = waUrl;
+  const ctaWhatsAppButton =
+    $("#ctaWhatsAppButton");
+
+  const mobileWhatsApp =
+    $("#mobileWhatsApp");
+
+  if (whatsappButton) {
+    whatsappButton.href =
+      waUrl;
+  }
+
+  if (ctaWhatsAppButton) {
+    ctaWhatsAppButton.href =
+      waUrl;
+  }
+
+  if (mobileWhatsApp) {
+    mobileWhatsApp.href =
+      waUrl;
+  }
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      Email
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
-  const emailCard = $("#emailCard");
+  const emailCard =
+    $("#emailCard");
 
   if (emailCard) {
-    emailCard.href = profile.email
-      ? `mailto:${profile.email}`
-      : "#";
+    emailCard.href =
+      profile.email
+        ? `mailto:${profile.email}`
+        : "#";
   }
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      Website
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
-  const websiteCard = $("#websiteCard");
+  const websiteCard =
+    $("#websiteCard");
 
   if (websiteCard) {
-    websiteCard.href = profile.website || "#";
+    websiteCard.href =
+      profile.website || "#";
   }
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      Maps
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
-  const mapsButton = $("#mapsButton");
+  const mapsButton =
+    $("#mapsButton");
 
   if (mapsButton) {
-    mapsButton.onclick = () => {
-      const url = mapsUrl(profile);
 
-      if (url) {
-        window.open(
-          url,
-          "_blank",
-          "noopener,noreferrer"
-        );
-      }
-    };
+    mapsButton.onclick =
+      () => {
+
+        const url =
+          mapsUrl(profile);
+
+        if (url) {
+
+          window.open(
+            url,
+            "_blank",
+            "noopener,noreferrer"
+          );
+        }
+      };
   }
 
-  const locationCard = $("#locationCard");
 
-  if (locationCard && mapsButton) {
-    locationCard.onclick = () => mapsButton.click();
+  const locationCard =
+    $("#locationCard");
+
+  if (
+    locationCard &&
+    mapsButton
+  ) {
+
+    locationCard.onclick =
+      () => {
+        mapsButton.click();
+      };
   }
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      Sections
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
   hideIfEmpty(
     "contactSection",
@@ -325,49 +508,62 @@ function renderProfile(profile) {
   );
 
 
-  /* ---------------------------------------------------------
-     Dynamic Content
-  --------------------------------------------------------- */
+  /* -----------------------------------------
+     Dynamic sections
+  ----------------------------------------- */
 
-  renderServices(profile.services);
-  renderSocials(profile);
-  renderBusinessCard(profile);
+  renderServices(
+    profile.services
+  );
+
+  renderSocials(
+    profile
+  );
+
+  renderBusinessCard(
+    profile
+  );
 
 
-  /* ---------------------------------------------------------
-     SEO
-  --------------------------------------------------------- */
+  /* -----------------------------------------
+     Open Graph
+  ----------------------------------------- */
 
-  const ogImage = $("#ogImage");
+  const ogImage =
+    $("#ogImage");
 
-  if (ogImage && profile.profileImage) {
+  if (
+    ogImage &&
+    profile.profileImage
+  ) {
+
     ogImage.setAttribute(
       "content",
       profile.profileImage
     );
   }
 
-  const description = document.querySelector(
-    'meta[name="description"]'
-  );
+
+  /* -----------------------------------------
+     Meta description
+  ----------------------------------------- */
+
+  const description =
+    document.querySelector(
+      'meta[name="description"]'
+    );
 
   if (description) {
+
     description.setAttribute(
       "content",
       profile.description ||
         `${profile.name} - ${
-          profile.company || "Business Profile"
+          profile.company ||
+          "Business Profile"
         }`
     );
   }
-
-
-  /*
-    IMPORTANT:
-    Start preparing the vCard immediately when the page loads.
-    This happens BEFORE the visitor taps Save Contact.
-  */
-  prepareVCard();
 }
 
 
@@ -375,11 +571,19 @@ function renderProfile(profile) {
    SERVICES
 ========================================================= */
 
-function renderServices(services = []) {
-  const section = $("#servicesSection");
-  const grid = $("#servicesGrid");
+function renderServices(
+  services = []
+) {
 
-  if (!section || !grid) return;
+  const section =
+    $("#servicesSection");
+
+  const grid =
+    $("#servicesGrid");
+
+  if (!section || !grid) {
+    return;
+  }
 
   grid.innerHTML = "";
 
@@ -390,45 +594,65 @@ function renderServices(services = []) {
 
   section.hidden = false;
 
-  services.forEach((service, index) => {
-    const item = document.createElement("div");
+  services.forEach(
+    (service, index) => {
 
-    item.className = "service-item";
+      const item =
+        document.createElement(
+          "div"
+        );
 
-    item.innerHTML = `
-      <span class="service-number">
-        ${String(index + 1).padStart(2, "0")}
-      </span>
+      item.className =
+        "service-item";
 
-      <span class="service-name"></span>
-    `;
+      item.innerHTML = `
+        <span class="service-number">
+          ${String(index + 1).padStart(2, "0")}
+        </span>
 
-    const serviceName = item.querySelector(
-      ".service-name"
-    );
+        <span class="service-name"></span>
+      `;
 
-    if (serviceName) {
-      serviceName.textContent = service;
+      const name =
+        item.querySelector(
+          ".service-name"
+        );
+
+      if (name) {
+        name.textContent =
+          service;
+      }
+
+      grid.appendChild(
+        item
+      );
     }
-
-    grid.appendChild(item);
-  });
+  );
 }
 
 
 /* =========================================================
-   SOCIAL LINKS
+   SOCIALS
 ========================================================= */
 
 function renderSocials(profile) {
-  const section = $("#socialSection");
-  const grid = $("#socialGrid");
 
-  if (!section || !grid) return;
+  const section =
+    $("#socialSection");
+
+  const grid =
+    $("#socialGrid");
+
+  if (!section || !grid) {
+    return;
+  }
 
   grid.innerHTML = "";
 
-  const entries = socialEntries(profile);
+  const entries =
+    socialEntries(
+      profile
+    );
 
   if (!entries.length) {
     section.hidden = true;
@@ -437,37 +661,59 @@ function renderSocials(profile) {
 
   section.hidden = false;
 
-  entries.forEach(({ label, icon, url }) => {
-    const item = document.createElement("a");
+  entries.forEach(
+    ({
+      label,
+      icon,
+      url
+    }) => {
 
-    item.className = "social-item";
-    item.href = url;
-    item.target = "_blank";
-    item.rel = "noopener noreferrer";
+      const item =
+        document.createElement(
+          "a"
+        );
 
-    item.innerHTML = `
-      <span class="social-icon">
-        ${icon}
-      </span>
+      item.className =
+        "social-item";
 
-      <span class="social-name"></span>
+      item.href = url;
 
-      <span
-        class="arrow"
-        style="margin-left:auto"
-      >
-        ↗
-      </span>
-    `;
+      item.target =
+        "_blank";
 
-    const name = item.querySelector(".social-name");
+      item.rel =
+        "noopener noreferrer";
 
-    if (name) {
-      name.textContent = label;
+      item.innerHTML = `
+        <span class="social-icon">
+          ${icon}
+        </span>
+
+        <span class="social-name"></span>
+
+        <span
+          class="arrow"
+          style="margin-left:auto"
+        >
+          ↗
+        </span>
+      `;
+
+      const socialName =
+        item.querySelector(
+          ".social-name"
+        );
+
+      if (socialName) {
+        socialName.textContent =
+          label;
+      }
+
+      grid.appendChild(
+        item
+      );
     }
-
-    grid.appendChild(item);
-  });
+  );
 }
 
 
@@ -475,153 +721,152 @@ function renderSocials(profile) {
    BUSINESS CARD
 ========================================================= */
 
-function renderBusinessCard(profile) {
-  const section = $("#businessCardSection");
-  const preview = $("#businessCardPreview");
+function renderBusinessCard(
+  profile
+) {
 
-  if (!section || !preview) return;
+  const section =
+    $("#businessCardSection");
+
+  const preview =
+    $("#businessCardPreview");
+
+  if (
+    !section ||
+    !preview
+  ) {
+    return;
+  }
 
   if (!profile.businessCardImage) {
+
     section.hidden = true;
+
     return;
   }
 
   section.hidden = false;
 
-  preview.src = profile.businessCardImage;
-  preview.alt = `${profile.name} business visiting card`;
+  preview.src =
+    profile.businessCardImage;
 
-  preview.onerror = () => {
-    section.hidden = true;
+  preview.alt =
+    `${profile.name} business visiting card`;
 
-    showToast(
-      "Business card image could not be loaded."
-    );
-  };
+  preview.onerror =
+    () => {
+
+      section.hidden = true;
+
+      showToast(
+        "Business card image could not be loaded."
+      );
+    };
 }
 
 
 /* =========================================================
-   VCARD
+   VCARD ESCAPING
 ========================================================= */
 
-function buildVCardPhotoField(base64, mimeType) {
-  if (!base64) return "";
-
-  const extension =
-    (mimeType || "image/jpeg")
-      .split("/")[1] || "jpeg";
-
-  return (
-    `PHOTO;ENCODING=b;TYPE=${extension.toUpperCase()}:` +
-    base64
-  );
-}
-
-
-async function imageToBase64Data(imageUrl) {
-  try {
-    if (!imageUrl) {
-      return {
-        base64: "",
-        mimeType: ""
-      };
-    }
-
-    const response = await fetch(imageUrl, {
-      cache: "no-cache"
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Image fetch failed: ${response.status}`
-      );
-    }
-
-    const blob = await response.blob();
-
-    return await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const result = String(
-          reader.result || ""
-        );
-
-        const comma = result.indexOf(",");
-
-        resolve({
-          base64:
-            comma >= 0
-              ? result.slice(comma + 1)
-              : "",
-          mimeType:
-            blob.type || "image/jpeg"
-        });
-      };
-
-      reader.onerror = reject;
-
-      reader.readAsDataURL(blob);
-    });
-  } catch (error) {
-    console.warn(
-      "vCard photo could not be loaded:",
-      error
-    );
-
-    /*
-      Very important:
-      Contact creation must NOT fail just because
-      the photo could not be fetched.
-    */
-    return {
-      base64: "",
-      mimeType: ""
-    };
-  }
-}
-
-
 function escapeVCard(value) {
-  return String(value || "")
-    .replace(/\\/g, "\\\\")
-    .replace(/\n/g, "\\n")
-    .replace(/;/g, "\\;")
-    .replace(/,/g, "\\,");
+
+  return String(
+    value || ""
+  )
+
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+
+    .replace(
+      /\n/g,
+      "\\n"
+    )
+
+    .replace(
+      /;/g,
+      "\\;"
+    )
+
+    .replace(
+      /,/g,
+      "\\,"
+    );
 }
 
+
+/* =========================================================
+   VCARD LINE FOLDING
+========================================================= */
 
 function foldVCardLine(line) {
-  const max = 72;
 
-  const chars = Array.from(line);
-  const lines = [];
+  const max =
+    72;
 
-  while (chars.length > max) {
+  const chars =
+    Array.from(line);
+
+  const lines =
+    [];
+
+  while (
+    chars.length > max
+  ) {
+
     lines.push(
-      chars.splice(0, max).join("")
+      chars
+        .splice(
+          0,
+          max
+        )
+        .join("")
     );
   }
 
   if (chars.length) {
-    lines.push(chars.join(""));
+
+    lines.push(
+      chars.join("")
+    );
   }
 
-  return lines.join("\r\n ");
+  return lines.join(
+    "\r\n "
+  );
 }
 
 
 /* =========================================================
-   GENERATE VCARD
+   SYNCHRONOUS VCARD GENERATION
 ========================================================= */
 
-async function generateVCard(profile) {
-  const photo = await imageToBase64Data(
-    profile.vcardPhoto || profile.profileImage
-  );
+/*
+  IMPORTANT
+
+  This function must stay synchronous.
+
+  Do NOT add:
+    async
+    await
+    fetch()
+    FileReader
+    image loading
+
+  to this function.
+
+  It needs to run directly from the
+  Save Contact button's click event.
+*/
+
+function generateVCard(
+  profile
+) {
 
   const socialLines = [
+
     profile.instagram &&
       `item1.URL:${escapeVCard(
         profile.instagram
@@ -641,26 +886,33 @@ async function generateVCard(profile) {
       `item4.URL:${escapeVCard(
         profile.website
       )}\r\nitem4.X-ABLabel:Website`
+
   ].filter(Boolean);
 
-  const photoLine = buildVCardPhotoField(
-    photo.base64,
-    photo.mimeType
-  );
 
   const raw = [
+
     "BEGIN:VCARD",
+
     "VERSION:3.0",
 
-    `FN:${escapeVCard(profile.name)}`,
+    `FN:${escapeVCard(
+      profile.name
+    )}`,
 
-    `N:${escapeVCard(profile.name)};;;`,
+    `N:${escapeVCard(
+      profile.name
+    )};;;`,
 
     profile.company &&
-      `ORG:${escapeVCard(profile.company)}`,
+      `ORG:${escapeVCard(
+        profile.company
+      )}`,
 
     profile.title &&
-      `TITLE:${escapeVCard(profile.title)}`,
+      `TITLE:${escapeVCard(
+        profile.title
+      )}`,
 
     profile.phone &&
       `TEL;TYPE=CELL,VOICE:${escapeVCard(
@@ -683,7 +935,9 @@ async function generateVCard(profile) {
       )};;;`,
 
     profile.website &&
-      `URL:${escapeVCard(profile.website)}`,
+      `URL:${escapeVCard(
+        profile.website
+      )}`,
 
     profile.description &&
       `NOTE:${escapeVCard(
@@ -692,123 +946,174 @@ async function generateVCard(profile) {
 
     ...socialLines,
 
-    photoLine,
-
     "END:VCARD"
+
   ]
     .filter(Boolean)
     .join("\r\n");
 
+
   return raw
     .split("\r\n")
-    .map(foldVCardLine)
+    .map(
+      foldVCardLine
+    )
     .join("\r\n");
 }
 
 
 /* =========================================================
-   PREPARE VCARD IN BACKGROUND
+   VCARD DOWNLOAD
 ========================================================= */
 
-async function prepareVCard() {
-  if (preparingVCard) {
-    return;
-  }
+/*
+  This function uses the Blob URL download method.
 
-  /*
-    Don't prepare repeatedly.
-  */
-  if (preparedVCard) {
-    return;
-  }
+  It is synchronous and can be called directly
+  from a user gesture.
+*/
 
-  preparingVCard = true;
+function downloadVCard(
+  blob,
+  filename
+) {
 
   try {
-    preparedVCard = await generateVCard(
-      businessProfile
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+    link.href =
+      url;
+
+    link.download =
+      filename;
+
+    link.setAttribute(
+      "download",
+      filename
     );
 
-    console.log(
-      "vCard prepared successfully."
-    );
-  } catch (error) {
-    console.error(
-      "Could not prepare vCard:",
-      error
+    link.style.display =
+      "none";
+
+    document.body.appendChild(
+      link
     );
 
     /*
-      Generate a minimal vCard without photo as
-      an emergency fallback.
+      IMPORTANT:
+      Immediate click.
     */
-    preparedVCard = [
-      "BEGIN:VCARD",
-      "VERSION:3.0",
-      `FN:${escapeVCard(
-        businessProfile.name
-      )}`,
-      businessProfile.company
-        ? `ORG:${escapeVCard(
-            businessProfile.company
-          )}`
-        : "",
-      businessProfile.title
-        ? `TITLE:${escapeVCard(
-            businessProfile.title
-          )}`
-        : "",
-      businessProfile.phone
-        ? `TEL;TYPE=CELL,VOICE:${escapeVCard(
-            businessProfile.phone
-          )}`
-        : "",
-      businessProfile.email
-        ? `EMAIL;TYPE=INTERNET:${escapeVCard(
-            businessProfile.email
-          )}`
-        : "",
-      businessProfile.website
-        ? `URL:${escapeVCard(
-            businessProfile.website
-          )}`
-        : "",
-      "END:VCARD"
-    ]
-      .filter(Boolean)
-      .join("\r\n");
-  } finally {
-    preparingVCard = false;
+    link.click();
+
+    link.remove();
+
+
+    /*
+      Give mobile browsers enough time
+      before releasing the Blob URL.
+    */
+    setTimeout(
+      () => {
+        URL.revokeObjectURL(
+          url
+        );
+      },
+      10000
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "vCard Blob download failed:",
+      error
+    );
+
+    return false;
   }
 }
 
 
 /* =========================================================
-   DOWNLOAD
+   DATA URL FALLBACK
 ========================================================= */
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
+/*
+  Some mobile browsers don't properly download
+  Blob URLs.
 
-  const a = document.createElement("a");
+  This provides another fallback.
 
-  a.href = url;
-  a.download = filename;
-  a.rel = "noopener";
+  It is only reached when the normal Blob
+  download isn't available.
+*/
 
-  document.body.appendChild(a);
+function openVCardDataUrl(
+  vcard
+) {
 
-  a.click();
+  try {
 
-  a.remove();
+    const dataUrl =
+      "data:text/vcard;charset=utf-8," +
+      encodeURIComponent(
+        vcard
+      );
 
-  /*
-    Do not revoke immediately.
-    Some mobile browsers need a little time.
-  */
-  setTimeout(() => {
-    URL.revokeObjectURL(url);
-  }, 3000);
+    const link =
+      document.createElement(
+        "a"
+      );
+
+    link.href =
+      dataUrl;
+
+    link.setAttribute(
+      "download",
+      safeFilename(
+        businessProfile.name,
+        ".vcf"
+      )
+    );
+
+    link.target =
+      "_blank";
+
+    link.rel =
+      "noopener";
+
+    link.style.display =
+      "none";
+
+    document.body.appendChild(
+      link
+    );
+
+    link.click();
+
+    link.remove();
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "vCard data URL failed:",
+      error
+    );
+
+    return false;
+  }
 }
 
 
@@ -816,298 +1121,318 @@ function downloadBlob(blob, filename) {
    SAVE CONTACT
 ========================================================= */
 
-async function saveContact() {
+/*
+  IMPORTANT:
+  This function is intentionally NOT async.
 
-  /*
-    IMPORTANT:
-    If the vCard has already been prepared in the background,
-    we can immediately use it from the user's tap.
+  The browser must see the share/download
+  operation as part of the original user's tap.
+*/
 
-    This preserves the browser's user interaction permission.
-  */
-  if (preparedVCard) {
-    await savePreparedContact(preparedVCard);
-    return;
-  }
+function saveContact() {
 
-
-  /*
-    Emergency fallback.
-
-    This creates a contact WITHOUT waiting for a photo.
-    Therefore the save function still works even when:
-    - the photo fetch fails
-    - the connection is slow
-    - the site is opened from another app
-    - the browser blocks delayed downloads
-  */
-  const fallbackVCard = buildFallbackVCard();
-
-  await savePreparedContact(fallbackVCard);
-
-
-  /*
-    Continue preparing the full version in the background
-    for the next tap.
-  */
-  prepareVCard();
-}
-
-
-/* =========================================================
-   FALLBACK VCARD WITHOUT PHOTO
-========================================================= */
-
-function buildFallbackVCard() {
-  const socialLines = [
-    businessProfile.instagram &&
-      `item1.URL:${escapeVCard(
-        businessProfile.instagram
-      )}\r\nitem1.X-ABLabel:Instagram`,
-
-    businessProfile.facebook &&
-      `item2.URL:${escapeVCard(
-        businessProfile.facebook
-      )}\r\nitem2.X-ABLabel:Facebook`,
-
-    businessProfile.linkedin &&
-      `item3.URL:${escapeVCard(
-        businessProfile.linkedin
-      )}\r\nitem3.X-ABLabel:LinkedIn`,
-
-    businessProfile.website &&
-      `item4.URL:${escapeVCard(
-        businessProfile.website
-      )}\r\nitem4.X-ABLabel:Website`
-  ].filter(Boolean);
-
-  const raw = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-
-    `FN:${escapeVCard(
-      businessProfile.name
-    )}`,
-
-    `N:${escapeVCard(
-      businessProfile.name
-    )};;;`,
-
-    businessProfile.company &&
-      `ORG:${escapeVCard(
-        businessProfile.company
-      )}`,
-
-    businessProfile.title &&
-      `TITLE:${escapeVCard(
-        businessProfile.title
-      )}`,
-
-    businessProfile.phone &&
-      `TEL;TYPE=CELL,VOICE:${escapeVCard(
-        businessProfile.phone
-      )}`,
-
-    businessProfile.whatsapp &&
-      `TEL;TYPE=WORK,VOICE:${escapeVCard(
-        businessProfile.whatsapp
-      )}`,
-
-    businessProfile.email &&
-      `EMAIL;TYPE=INTERNET:${escapeVCard(
-        businessProfile.email
-      )}`,
-
-    businessProfile.address &&
-      `ADR;TYPE=WORK:;;${escapeVCard(
-        businessProfile.address
-      )};;;`,
-
-    businessProfile.website &&
-      `URL:${escapeVCard(
-        businessProfile.website
-      )}`,
-
-    businessProfile.description &&
-      `NOTE:${escapeVCard(
-        businessProfile.description
-      )}`,
-
-    ...socialLines,
-
-    "END:VCARD"
-  ]
-    .filter(Boolean)
-    .join("\r\n");
-
-  return raw
-    .split("\r\n")
-    .map(foldVCardLine)
-    .join("\r\n");
-}
-
-
-/* =========================================================
-   MOBILE SAVE / SHARE CONTACT
-========================================================= */
-
-async function savePreparedContact(vcard) {
-  if (!vcard) {
-    showToast(
-      "Could not create the contact file."
-    );
-    return;
-  }
-
-  const filename = safeFilename(
-    businessProfile.name,
-    ".vcf"
-  );
-
-  const blob = new Blob(
-    [vcard],
-    {
-      type: "text/vcard;charset=utf-8"
-    }
-  );
-
-
-  /*
-    FIRST CHOICE:
-    Use native Web Share when the browser supports
-    sharing files.
-
-    This is particularly useful on mobile browsers
-    where direct Blob downloads are unreliable.
-  */
   try {
-    if (
-      navigator.share &&
-      navigator.canShare
-    ) {
-      const file = new File(
-        [blob],
-        filename,
+
+    /*
+      ---------------------------------------------
+      1. Generate vCard immediately.
+      ---------------------------------------------
+    */
+
+    const vcard =
+      generateVCard(
+        businessProfile
+      );
+
+
+    if (!vcard) {
+
+      showToast(
+        "Unable to create contact."
+      );
+
+      return;
+    }
+
+
+    /*
+      ---------------------------------------------
+      2. Create contact file immediately.
+      ---------------------------------------------
+    */
+
+    const filename =
+      safeFilename(
+        businessProfile.name,
+        ".vcf"
+      );
+
+
+    const blob =
+      new Blob(
+        [vcard],
         {
-          type: "text/vcard"
+          type:
+            "text/vcard;charset=utf-8"
         }
       );
 
-      if (
-        navigator.canShare({
-          files: [file]
-        })
-      ) {
-        await navigator.share({
-          title: `${businessProfile.name} Contact`,
-          text: businessProfile.company
-            ? `${businessProfile.name} - ${businessProfile.company}`
-            : businessProfile.name,
-          files: [file]
-        });
 
-        showToast(
-          "Contact file ready to save."
-        );
+    const file =
+      new File(
+        [blob],
+        filename,
+        {
+          type:
+            "text/vcard"
+        }
+      );
+
+
+    /*
+      ---------------------------------------------
+      3. Try native mobile sharing.
+      ---------------------------------------------
+
+      This is the best option on mobile because
+      Android/iOS can hand the .vcf file directly
+      to compatible apps.
+    */
+
+    if (
+      typeof navigator.share ===
+        "function"
+    ) {
+
+      /*
+        Check whether this browser allows
+        sharing files.
+      */
+      let fileSharingSupported =
+        false;
+
+      try {
+
+        if (
+          typeof navigator.canShare ===
+            "function"
+        ) {
+
+          fileSharingSupported =
+            navigator.canShare({
+              files: [file]
+            });
+        }
+
+      } catch (error) {
+
+        fileSharingSupported =
+          false;
+      }
+
+
+      if (
+        fileSharingSupported
+      ) {
+
+        /*
+          VERY IMPORTANT:
+
+          Do NOT use:
+
+            await navigator.share(...)
+
+          here.
+
+          Calling navigator.share() immediately
+          keeps it attached to the original
+          user interaction.
+        */
+
+        navigator
+          .share({
+            title:
+              `${businessProfile.name} Contact`,
+
+            text:
+              businessProfile.company
+                ? `${businessProfile.name} - ${businessProfile.company}`
+                : businessProfile.name,
+
+            files: [file]
+          })
+
+          .then(
+            () => {
+
+              showToast(
+                "Contact sharing opened."
+              );
+            }
+          )
+
+          .catch(
+            (error) => {
+
+              /*
+                User cancelled.
+              */
+              if (
+                error &&
+                error.name ===
+                  "AbortError"
+              ) {
+                return;
+              }
+
+
+              /*
+                Native sharing failed.
+                Try normal .vcf download.
+              */
+
+              const downloaded =
+                downloadVCard(
+                  blob,
+                  filename
+                );
+
+
+              if (
+                downloaded
+              ) {
+
+                showToast(
+                  "Contact file created. Open the .vcf file to save the contact."
+                );
+
+                return;
+              }
+
+
+              /*
+                Last fallback.
+              */
+
+              const opened =
+                openVCardDataUrl(
+                  vcard
+                );
+
+
+              if (opened) {
+
+                showToast(
+                  "Opening contact file..."
+                );
+
+              } else {
+
+                showToast(
+                  "Your browser blocked the contact file."
+                );
+              }
+            }
+          );
 
         return;
       }
     }
-  } catch (error) {
+
 
     /*
-      User cancelled the share sheet.
-      Do not show an error in this case.
+      ---------------------------------------------
+      4. Blob download fallback
+      ---------------------------------------------
     */
+
+    const downloaded =
+      downloadVCard(
+        blob,
+        filename
+      );
+
+
     if (
-      error &&
-      error.name === "AbortError"
+      downloaded
     ) {
+
+      showToast(
+        "Contact file created. Open the .vcf file to save the contact."
+      );
+
       return;
     }
 
-    console.warn(
-      "Native contact sharing failed:",
-      error
-    );
-  }
+
+    /*
+      ---------------------------------------------
+      5. Data URL fallback
+      ---------------------------------------------
+    */
+
+    const opened =
+      openVCardDataUrl(
+        vcard
+      );
 
 
-  /*
-    SECOND CHOICE:
-    Normal .vcf download.
+    if (opened) {
 
-    This works on Chrome/Android and desktop browsers.
-  */
-  try {
-    downloadBlob(
-      blob,
-      filename
-    );
+      showToast(
+        "Opening contact file..."
+      );
 
-    showToast(
-      "Contact file created. Open it to save the contact."
-    );
-
-    return;
-
-  } catch (error) {
-    console.warn(
-      "Blob download failed:",
-      error
-    );
-  }
+      return;
+    }
 
 
-  /*
-    THIRD CHOICE:
-    Open the vCard directly.
-
-    This gives browsers such as some iOS configurations
-    another way to handle the contact file.
-  */
-  try {
-    const url = URL.createObjectURL(blob);
-
-    window.location.href = url;
-
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 5000);
+    /*
+      ---------------------------------------------
+      6. Everything failed
+      ---------------------------------------------
+    */
 
     showToast(
-      "Opening contact file..."
+      "Your browser could not create the contact file."
     );
 
   } catch (error) {
+
     console.error(
-      "Unable to open vCard:",
+      "Save Contact Error:",
       error
     );
 
     showToast(
-      "Could not create the contact file."
+      "Could not create the contact."
     );
   }
 }
 
 
 /* =========================================================
-   BUSINESS CARD DOWNLOAD
+   BUSINESS CARD FILE NAME
 ========================================================= */
 
-function getImageFileName(profile) {
+function getImageFileName(
+  profile
+) {
+
   const path =
     profile.businessCardImage
       .split("/")
       .pop() || "";
 
   const extensionMatch =
-    path.match(/\.[a-z0-9]+$/i);
+    path.match(
+      /\.[a-z0-9]+$/i
+    );
 
-  const ext = extensionMatch
-    ? extensionMatch[0].toLowerCase()
-    : ".png";
+  const ext =
+    extensionMatch
+      ? extensionMatch[0].toLowerCase()
+      : ".png";
 
   return safeFilename(
     profile.name,
@@ -1116,18 +1441,28 @@ function getImageFileName(profile) {
 }
 
 
+/* =========================================================
+   DOWNLOAD EXISTING BUSINESS CARD
+========================================================= */
+
 async function downloadExistingBusinessCard() {
-  if (!businessProfile.businessCardImage) {
+
+  if (
+    !businessProfile.businessCardImage
+  ) {
     return;
   }
 
   try {
-    const response = await fetch(
-      businessProfile.businessCardImage,
-      {
-        cache: "no-cache"
-      }
-    );
+
+    const response =
+      await fetch(
+        businessProfile.businessCardImage,
+        {
+          cache: "no-cache"
+        }
+      );
+
 
     if (!response.ok) {
       throw new Error(
@@ -1135,30 +1470,47 @@ async function downloadExistingBusinessCard() {
       );
     }
 
-    const blob = await response.blob();
+
+    const blob =
+      await response.blob();
+
 
     downloadBlob(
       blob,
-      getImageFileName(businessProfile)
+      getImageFileName(
+        businessProfile
+      )
     );
+
 
     showToast(
       "Business card image downloaded."
     );
 
   } catch {
-    const a = document.createElement("a");
+
+    const a =
+      document.createElement(
+        "a"
+      );
 
     a.href =
       businessProfile.businessCardImage;
 
     a.download =
-      getImageFileName(businessProfile);
+      getImageFileName(
+        businessProfile
+      );
 
-    a.target = "_blank";
-    a.rel = "noopener";
+    a.target =
+      "_blank";
 
-    document.body.appendChild(a);
+    a.rel =
+      "noopener";
+
+    document.body.appendChild(
+      a
+    );
 
     a.click();
 
@@ -1172,10 +1524,59 @@ async function downloadExistingBusinessCard() {
 
 
 /* =========================================================
+   GENERIC DOWNLOAD BLOB
+========================================================= */
+
+function downloadBlob(
+  blob,
+  filename
+) {
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+  a.href =
+    url;
+
+  a.download =
+    filename;
+
+  a.rel =
+    "noopener";
+
+  document.body.appendChild(
+    a
+  );
+
+  a.click();
+
+  a.remove();
+
+
+  setTimeout(
+    () => {
+      URL.revokeObjectURL(
+        url
+      );
+    },
+    3000
+  );
+}
+
+
+/* =========================================================
    SHARE BUSINESS CARD
 ========================================================= */
 
 async function shareExistingBusinessCard() {
+
   const imageUrl =
     businessProfile.businessCardImage;
 
@@ -1184,12 +1585,15 @@ async function shareExistingBusinessCard() {
   }
 
   try {
-    const response = await fetch(
-      imageUrl,
-      {
-        cache: "no-cache"
-      }
-    );
+
+    const response =
+      await fetch(
+        imageUrl,
+        {
+          cache: "no-cache"
+        }
+      );
+
 
     if (!response.ok) {
       throw new Error(
@@ -1197,18 +1601,23 @@ async function shareExistingBusinessCard() {
       );
     }
 
-    const blob = await response.blob();
 
-    const file = new File(
-      [blob],
-      getImageFileName(
-        businessProfile
-      ),
-      {
-        type:
-          blob.type || "image/png"
-      }
-    );
+    const blob =
+      await response.blob();
+
+
+    const file =
+      new File(
+        [blob],
+        getImageFileName(
+          businessProfile
+        ),
+        {
+          type:
+            blob.type ||
+            "image/png"
+        }
+      );
 
 
     if (
@@ -1217,8 +1626,11 @@ async function shareExistingBusinessCard() {
         files: [file]
       })
     ) {
+
       await navigator.share({
-        title: `${businessProfile.name} - Business Card`,
+
+        title:
+          `${businessProfile.name} - Business Card`,
 
         text:
           `${businessProfile.name}` +
@@ -1235,9 +1647,14 @@ async function shareExistingBusinessCard() {
     }
 
 
-    if (navigator.share) {
+    if (
+      navigator.share
+    ) {
+
       await navigator.share({
-        title: `${businessProfile.name} - Business Card`,
+
+        title:
+          `${businessProfile.name} - Business Card`,
 
         text:
           `${businessProfile.name}` +
@@ -1247,7 +1664,8 @@ async function shareExistingBusinessCard() {
               : ""
           ),
 
-        url: window.location.href
+        url:
+          window.location.href
       });
 
       return;
@@ -1259,8 +1677,8 @@ async function shareExistingBusinessCard() {
   } catch (error) {
 
     if (
-      error &&
-      error.name === "AbortError"
+      error?.name ===
+      "AbortError"
     ) {
       return;
     }
@@ -1275,7 +1693,9 @@ async function shareExistingBusinessCard() {
 ========================================================= */
 
 async function shareProfile() {
+
   const data = {
+
     title:
       `${businessProfile.name}` +
       (
@@ -1292,26 +1712,48 @@ async function shareProfile() {
       window.location.href
   };
 
+
   try {
 
-    if (navigator.share) {
-      await navigator.share(data);
+    if (
+      navigator.share
+    ) {
+
+      await navigator.share(
+        data
+      );
+
       return;
     }
 
-    await navigator.clipboard.writeText(
-      window.location.href
-    );
+
+    if (
+      navigator.clipboard
+    ) {
+
+      await navigator.clipboard.writeText(
+        window.location.href
+      );
+
+      showToast(
+        "Profile link copied."
+      );
+
+      return;
+    }
+
 
     showToast(
-      "Profile link copied."
+      "Could not share the profile."
     );
 
   } catch (error) {
 
     if (
-      error?.name !== "AbortError"
+      error?.name !==
+      "AbortError"
     ) {
+
       showToast(
         "Could not share the profile."
       );
@@ -1324,31 +1766,54 @@ async function shareProfile() {
    TOAST
 ========================================================= */
 
-function showToast(message) {
-  const toast = $("#toast");
+function showToast(
+  message
+) {
 
-  if (!toast) return;
+  const toast =
+    $("#toast");
 
-  toast.textContent = message;
+  if (!toast) {
+    return;
+  }
 
-  toast.classList.add("show");
+  toast.textContent =
+    message;
+
+  toast.classList.add(
+    "show"
+  );
+
 
   clearTimeout(
     showToast.timer
   );
 
-  showToast.timer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
+
+  showToast.timer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      3000
+    );
 }
 
 
 /* =========================================================
-   COPY
+   COPY TEXT
 ========================================================= */
 
-async function copyText(value) {
+async function copyText(
+  value
+) {
+
   try {
+
     await navigator.clipboard.writeText(
       value
     );
@@ -1358,6 +1823,7 @@ async function copyText(value) {
     );
 
   } catch {
+
     showToast(
       "Copy is not available in this browser."
     );
@@ -1366,10 +1832,15 @@ async function copyText(value) {
 
 
 /* =========================================================
-   INTERACTIONS
+   SETUP INTERACTIONS
 ========================================================= */
 
 function setupInteractions() {
+
+
+  /* -----------------------------------------
+     Save Contact
+  ----------------------------------------- */
 
   const saveContactButton =
     $("#saveContactButton");
@@ -1377,104 +1848,159 @@ function setupInteractions() {
   const mobileSaveContact =
     $("#mobileSaveContact");
 
+
+  if (
+    saveContactButton
+  ) {
+
+    saveContactButton.addEventListener(
+      "click",
+      function (event) {
+
+        /*
+          Prevent form submission if the
+          button happens to be inside a form.
+        */
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        saveContact();
+      }
+    );
+  }
+
+
+  if (
+    mobileSaveContact
+  ) {
+
+    mobileSaveContact.addEventListener(
+      "click",
+      function (event) {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        saveContact();
+      }
+    );
+  }
+
+
+  /* -----------------------------------------
+     Business Card Download
+  ----------------------------------------- */
+
   const downloadCardButton =
     $("#downloadCardButton");
 
-  const shareCardButton =
-    $("#shareCardButton");
+  if (
+    downloadCardButton
+  ) {
 
-  const shareProfileButton =
-    $("#shareProfileButton");
-
-
-  /*
-    IMPORTANT:
-    Do NOT make these event handlers wait for
-    image fetching before initiating the action.
-  */
-
-  if (saveContactButton) {
-    saveContactButton.addEventListener(
-      "click",
-      () => {
-        saveContact();
-      }
-    );
-  }
-
-  if (mobileSaveContact) {
-    mobileSaveContact.addEventListener(
-      "click",
-      () => {
-        saveContact();
-      }
-    );
-  }
-
-  if (downloadCardButton) {
     downloadCardButton.addEventListener(
       "click",
-      () => {
+      function (event) {
+
+        event.preventDefault();
+
         downloadExistingBusinessCard();
       }
     );
   }
 
-  if (shareCardButton) {
+
+  /* -----------------------------------------
+     Business Card Share
+  ----------------------------------------- */
+
+  const shareCardButton =
+    $("#shareCardButton");
+
+  if (
+    shareCardButton
+  ) {
+
     shareCardButton.addEventListener(
       "click",
-      () => {
+      function (event) {
+
+        event.preventDefault();
+
         shareExistingBusinessCard();
       }
     );
   }
 
-  if (shareProfileButton) {
+
+  /* -----------------------------------------
+     Profile Share
+  ----------------------------------------- */
+
+  const shareProfileButton =
+    $("#shareProfileButton");
+
+  if (
+    shareProfileButton
+  ) {
+
     shareProfileButton.addEventListener(
       "click",
-      () => {
+      function (event) {
+
+        event.preventDefault();
+
         shareProfile();
       }
     );
   }
 
 
-  /* ---------------------------------------------------------
-     Copy buttons
-  --------------------------------------------------------- */
+  /* -----------------------------------------
+     Copy Buttons
+  ----------------------------------------- */
 
   document
-    .querySelectorAll("[data-copy-target]")
-    .forEach((btn) => {
+    .querySelectorAll(
+      "[data-copy-target]"
+    )
+    .forEach(
+      (btn) => {
 
-      btn.addEventListener(
-        "click",
-        async (event) => {
+        btn.addEventListener(
+          "click",
+          async function (event) {
 
-          event.preventDefault();
-          event.stopPropagation();
+            event.preventDefault();
 
-          const target =
-            document.getElementById(
-              btn.dataset.copyTarget
-            );
+            event.stopPropagation();
 
-          if (
-            target &&
-            target.textContent
-          ) {
-            await copyText(
+            const target =
+              document.getElementById(
+                btn.dataset.copyTarget
+              );
+
+
+            if (
+              target &&
               target.textContent
-            );
+            ) {
+
+              await copyText(
+                target.textContent
+              );
+            }
           }
-        }
-      );
-    });
+        );
+      }
+    );
 
 
-  /* ---------------------------------------------------------
+  /* -----------------------------------------
      Read More
-  --------------------------------------------------------- */
+  ----------------------------------------- */
 
   const aboutCard =
     document.querySelector(
@@ -1485,21 +2011,28 @@ function setupInteractions() {
     $("#readMoreButton");
 
 
-  if (aboutCard && readMore) {
+  if (
+    aboutCard &&
+    readMore
+  ) {
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(
+      () => {
 
-      const p =
-        $("#description");
+        const p =
+          $("#description");
 
-      if (
-        p &&
-        p.scrollHeight >
-          p.clientHeight + 8
-      ) {
-        readMore.hidden = false;
+        if (
+          p &&
+          p.scrollHeight >
+            p.clientHeight + 8
+        ) {
+
+          readMore.hidden =
+            false;
+        }
       }
-    });
+    );
 
 
     readMore.addEventListener(
@@ -1520,28 +2053,29 @@ function setupInteractions() {
   }
 
 
-  /* ---------------------------------------------------------
-     External links
-  --------------------------------------------------------- */
+  /* -----------------------------------------
+     External Links
+  ----------------------------------------- */
 
   document
     .querySelectorAll("a")
-    .forEach((link) => {
+    .forEach(
+      (link) => {
 
-      link.addEventListener(
-        "click",
-        () => {
+        link.addEventListener(
+          "click",
+          function () {
 
-          if (
-            link.href === "#" ||
-            !link.href
-          ) {
-            return;
+            if (
+              link.href === "#" ||
+              !link.href
+            ) {
+              return;
+            }
           }
-
-        }
-      );
-    });
+        );
+      }
+    );
 }
 
 
