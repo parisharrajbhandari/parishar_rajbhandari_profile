@@ -349,6 +349,7 @@ function downloadBlob(blob, filename) {
 async function saveContact() {
   const vcard = await generateVCard(businessProfile);
   const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+  downloadBlob(blob, safeFilename(businessProfile.name, ".vcf"));
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
