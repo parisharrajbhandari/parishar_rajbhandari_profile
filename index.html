@@ -2,743 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-
-  <meta
-    name="theme-color"
-    content="#0e1116"
-  />
-
-  <meta
-    name="description"
-    content="Premium NFC digital business profile."
-  />
-
-  <meta
-    property="og:title"
-    content="Business Profile"
-  />
-
-  <meta
-    property="og:description"
-    content="Connect, call, message and save this business profile."
-  />
-
-  <meta
-    property="og:type"
-    content="profile"
-  />
-
-  <meta
-    property="og:image"
-    content=""
-    id="ogImage"
-  />
-
-  <title>
-    Business Profile
-  </title>
-
-
-  <!-- Favicon -->
-  <link
-    rel="icon"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230e1116'/%3E%3Ctext x='50' y='62' font-size='48' text-anchor='middle' fill='white'%3EB%3C/text%3E%3C/svg%3E"
-  />
-
-
-  <!-- Fonts -->
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  />
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  />
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
-
-
-  <!-- Styles -->
-  <link
-    rel="stylesheet"
-    href="styles.css"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e1116" />
+  <meta name="description" content="Premium NFC digital business profile." />
+  <meta property="og:title" content="Business Profile" />
+  <meta property="og:description" content="Connect, call, message and save this business profile." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:image" content="" id="ogImage" />
+  <title>Business Profile</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230e1116'/%3E%3Ctext x='50' y='62' font-size='48' text-anchor='middle' fill='white'%3EB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
-
 <body>
-
   <div class="page-shell">
-
-    <main
-      class="profile-card"
-      id="profileCard"
-    >
-
-
-      <!-- =================================================
-           HERO
-      ================================================== -->
-
+    <main class="profile-card" id="profileCard">
       <section class="hero section">
-
         <div class="hero-glow"></div>
-
-
         <div class="identity">
-
           <div class="profile-avatar-wrap">
-
-            <img
-              id="profileImage"
-              class="profile-avatar"
-              src=""
-              alt="Profile photo"
-            />
-
+            <img id="profileImage" class="profile-avatar" src="" alt="Profile photo" />
           </div>
-
-
           <div class="identity-copy">
-
-            <div class="eyebrow">
-              DIGITAL BUSINESS PROFILE
-            </div>
-
-            <h1 id="name">
-              Business Owner
-            </h1>
-
-            <p
-              id="title"
-              class="role"
-            ></p>
-
-            <p
-              id="company"
-              class="company"
-            ></p>
-
+            <div class="eyebrow">DIGITAL BUSINESS PROFILE</div>
+            <h1 id="name">Business Owner</h1>
+            <p id="title" class="role"></p>
+            <p id="company" class="company"></p>
           </div>
-
         </div>
 
-
-        <p
-          id="tagline"
-          class="tagline"
-        ></p>
-
-
-        <!-- =================================================
-             PRIMARY ACTIONS
-        ================================================== -->
+        <p id="tagline" class="tagline"></p>
 
         <div class="primary-actions">
-
-          <a
-            id="callButton"
-            class="action-btn action-primary"
-            href="#"
-            aria-label="Call business owner"
-          >
-            <span class="icon">☎</span>
-            <span>Call Now</span>
+          <a id="callButton" class="action-btn action-primary" href="#" aria-label="Call business owner">
+            <span class="icon">☎</span><span>Call Now</span>
           </a>
-
-
-          <a
-            id="whatsappButton"
-            class="action-btn action-whatsapp"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open WhatsApp"
-          >
-            <span class="icon">◉</span>
-            <span>WhatsApp</span>
+          <a id="whatsappButton" class="action-btn action-whatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp">
+            <span class="icon">◉</span><span>WhatsApp</span>
           </a>
-
-
-          <!--
-            IMPORTANT
-
-            This is now a normal link to the real
-            VCF file.
-
-            Put this file at:
-
-            assets/contacts/parishar-rajbhandari.vcf
-          -->
-
-          <a
-            id="saveContactButton"
-            class="action-btn action-outline"
-            href="assets/contacts/parishar-rajbhandari.vcf"
-            download
-            aria-label="Save Parishar Rajbhandari contact"
-          >
-            <span class="icon">＋</span>
-            <span>Save Contact</span>
-          </a>
-
+          <button id="saveContactButton" class="action-btn action-outline" type="button">
+            <span class="icon">＋</span><span>Save Contact</span>
+          </button>
         </div>
-
       </section>
 
-
-
-      <!-- =================================================
-           CONTACT INFORMATION
-      ================================================== -->
-
-      <section
-        class="section"
-        id="contactSection"
-      >
-
+      <section class="section" id="contactSection">
         <div class="section-heading">
-
-          <span class="section-kicker">
-            CONNECT
-          </span>
-
-          <h2>
-            Contact Information
-          </h2>
-
+          <span class="section-kicker">CONNECT</span>
+          <h2>Contact Information</h2>
         </div>
-
 
         <div class="info-grid">
-
-
-          <!-- Phone -->
-
-          <a
-            class="info-card"
-            id="phoneCard"
-            href="#"
-          >
-
-            <div class="info-icon">
-              ☎
-            </div>
-
+          <a class="info-card" id="phoneCard" href="#">
+            <div class="info-icon">☎</div>
             <div>
-
-              <span class="label">
-                Phone
-              </span>
-
-              <strong
-                id="phoneValue"
-              ></strong>
-
+              <span class="label">Phone</span>
+              <strong id="phoneValue"></strong>
             </div>
-
-
-            <button
-              class="copy-btn"
-              type="button"
-              data-copy-target="phoneValue"
-              aria-label="Copy phone number"
-            >
-              ⧉
-            </button>
-
+            <button class="copy-btn" type="button" data-copy-target="phoneValue" aria-label="Copy phone number">⧉</button>
           </a>
 
-
-
-          <!-- Email -->
-
-          <a
-            class="info-card"
-            id="emailCard"
-            href="#"
-          >
-
-            <div class="info-icon">
-              @
-            </div>
-
+          <a class="info-card" id="emailCard" href="#">
+            <div class="info-icon">@</div>
             <div class="text-wrap">
-
-              <span class="label">
-                Email
-              </span>
-
-              <strong
-                id="emailValue"
-              ></strong>
-
+              <span class="label">Email</span>
+              <strong id="emailValue"></strong>
             </div>
-
-
-            <button
-              class="copy-btn"
-              type="button"
-              data-copy-target="emailValue"
-              aria-label="Copy email"
-            >
-              ⧉
-            </button>
-
+            <button class="copy-btn" type="button" data-copy-target="emailValue" aria-label="Copy email">⧉</button>
           </a>
 
-
-
-          <!-- Website -->
-
-          <a
-            class="info-card"
-            id="websiteCard"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-
-            <div class="info-icon">
-              ↗
-            </div>
-
+          <a class="info-card" id="websiteCard" href="#" target="_blank" rel="noopener noreferrer">
+            <div class="info-icon">↗</div>
             <div class="text-wrap">
-
-              <span class="label">
-                Website
-              </span>
-
-              <strong
-                id="websiteValue"
-              ></strong>
-
+              <span class="label">Website</span>
+              <strong id="websiteValue"></strong>
             </div>
-
           </a>
 
-
-
-          <!-- Location -->
-
-          <button
-            class="info-card location-card"
-            id="locationCard"
-            type="button"
-          >
-
-            <div class="info-icon">
-              ⌖
-            </div>
-
+          <button class="info-card location-card" id="locationCard" type="button">
+            <div class="info-icon">⌖</div>
             <div class="text-wrap">
-
-              <span class="label">
-                Business Location
-              </span>
-
-              <strong
-                id="addressValue"
-              ></strong>
-
+              <span class="label">Business Location</span>
+              <strong id="addressValue"></strong>
             </div>
-
-            <span class="arrow">
-              ›
-            </span>
-
+            <span class="arrow">›</span>
           </button>
-
         </div>
-
       </section>
 
-
-
-      <!-- =================================================
-           LOCATION
-      ================================================== -->
-
-      <section
-        class="section"
-        id="locationSection"
-      >
-
+      <section class="section" id="locationSection">
         <div class="location-banner">
-
           <div>
-
-            <span class="section-kicker">
-              VISIT US
-            </span>
-
-            <h2>
-              Business Location
-            </h2>
-
-            <p
-              id="locationText"
-            ></p>
-
+            <span class="section-kicker">VISIT US</span>
+            <h2>Business Location</h2>
+            <p id="locationText"></p>
           </div>
-
-
-          <button
-            id="mapsButton"
-            class="secondary-btn"
-            type="button"
-          >
-            Open in Google Maps ↗
-          </button>
-
+          <button id="mapsButton" class="secondary-btn" type="button">Open in Google Maps ↗</button>
         </div>
-
       </section>
 
-
-
-      <!-- =================================================
-           ABOUT
-      ================================================== -->
-
-      <section
-        class="section"
-        id="aboutSection"
-      >
-
+      <section class="section" id="aboutSection">
         <div class="section-heading">
-
-          <span class="section-kicker">
-            ABOUT
-          </span>
-
-          <h2>
-            About the Business
-          </h2>
-
+          <span class="section-kicker">ABOUT</span>
+          <h2>About the Business</h2>
         </div>
-
-
         <div class="about-card">
-
-          <p
-            id="description"
-          ></p>
-
-
-          <button
-            id="readMoreButton"
-            class="text-btn"
-            type="button"
-            hidden
-          >
-            Read More
-          </button>
-
+          <p id="description"></p>
+          <button id="readMoreButton" class="text-btn" type="button" hidden>Read More</button>
         </div>
-
       </section>
 
-
-
-      <!-- =================================================
-           SERVICES
-      ================================================== -->
-
-      <section
-        class="section"
-        id="servicesSection"
-      >
-
+      <section class="section" id="servicesSection">
         <div class="section-heading">
-
-          <span class="section-kicker">
-            EXPERTISE
-          </span>
-
-          <h2>
-            Our Services
-          </h2>
-
+          <span class="section-kicker">EXPERTISE</span>
+          <h2>Our Services</h2>
         </div>
-
-
-        <div
-          class="services-grid"
-          id="servicesGrid"
-        ></div>
-
+        <div class="services-grid" id="servicesGrid"></div>
       </section>
 
-
-
-      <!-- =================================================
-           SOCIAL MEDIA
-      ================================================== -->
-
-      <section
-        class="section"
-        id="socialSection"
-      >
-
+      <section class="section" id="socialSection">
         <div class="section-heading">
-
-          <span class="section-kicker">
-            FOLLOW
-          </span>
-
-          <h2>
-            Connect on Social Media
-          </h2>
-
+          <span class="section-kicker">FOLLOW</span>
+          <h2>Connect on Social Media</h2>
         </div>
-
-
-        <div
-          class="social-grid"
-          id="socialGrid"
-        ></div>
-
+        <div class="social-grid" id="socialGrid"></div>
       </section>
 
-
-
-      <!-- =================================================
-           BUSINESS CARD
-      ================================================== -->
-
-      <section
-        class="section business-card-section"
-        id="businessCardSection"
-      >
-
+      <section class="section business-card-section" id="businessCardSection">
         <div class="section-heading">
-
-          <span class="section-kicker">
-            DIGITAL VISITING CARD
-          </span>
-
-          <h2>
-            Save the Business Card
-          </h2>
-
+          <span class="section-kicker">DIGITAL VISITING CARD</span>
+          <h2>Save the Business Card</h2>
         </div>
-
-
         <div class="business-card-card">
-
-          <img
-            id="businessCardPreview"
-            src=""
-            alt="Business visiting card"
-          />
-
-
-          <div
-            class="business-card-actions"
-          >
-
-            <button
-              id="downloadCardButton"
-              class="action-btn action-primary"
-              type="button"
-            >
-
-              <span class="icon">
-                ↓
-              </span>
-
-              <span>
-                Save Business Card
-              </span>
-
+          <img id="businessCardPreview" src="" alt="Business visiting card" />
+          <div class="business-card-actions">
+            <button id="downloadCardButton" class="action-btn action-primary" type="button">
+              <span class="icon">↓</span><span>Save Business Card</span>
             </button>
-
-
-            <button
-              id="shareCardButton"
-              class="action-btn action-outline"
-              type="button"
-            >
-
-              <span class="icon">
-                ↗
-              </span>
-
-              <span>
-                Share Business Card
-              </span>
-
+            <button id="shareCardButton" class="action-btn action-outline" type="button">
+              <span class="icon">↗</span><span>Share Business Card</span>
             </button>
-
           </div>
-
-
-          <p class="microcopy">
-            This uses the original visiting-card image stored
-            in the project. No card image is generated or redrawn.
-          </p>
-
+          <p class="microcopy">This uses the original visiting-card image stored in the project. No card image is generated or redrawn.</p>
         </div>
-
       </section>
 
-
-
-      <!-- =================================================
-           CTA
-      ================================================== -->
-
-      <section
-        class="section cta-section"
-      >
-
+      <section class="section cta-section">
         <div class="cta-card">
-
-          <span class="section-kicker">
-            LET’S WORK TOGETHER
-          </span>
-
-          <h2>
-            Have a project or inquiry?
-          </h2>
-
-          <p>
-            Reach out directly using your preferred
-            contact method.
-          </p>
-
-
+          <span class="section-kicker">LET’S WORK TOGETHER</span>
+          <h2>Have a project or inquiry?</h2>
+          <p>Reach out directly using your preferred contact method.</p>
           <div class="cta-actions">
-
-            <a
-              id="ctaCallButton"
-              class="secondary-btn"
-              href="#"
-            >
-              Call Now
-            </a>
-
-
-            <a
-              id="ctaWhatsAppButton"
-              class="secondary-btn"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-
+            <a id="ctaCallButton" class="secondary-btn" href="#">Call Now</a>
+            <a id="ctaWhatsAppButton" class="secondary-btn" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
           </div>
-
         </div>
-
       </section>
-
-
-
-      <!-- =================================================
-           FOOTER
-      ================================================== -->
 
       <footer class="footer">
-
-        <span
-          id="footerCompany"
-        ></span>
-
-
-        <button
-          id="shareProfileButton"
-          class="footer-share"
-          type="button"
-        >
-          Share Profile
-        </button>
-
+        <span id="footerCompany"></span>
+        <button id="shareProfileButton" class="footer-share" type="button">Share Profile</button>
       </footer>
-
-
     </main>
-
   </div>
-
-
-
-  <!-- =====================================================
-       MOBILE BAR
-  ====================================================== -->
 
   <div class="mobile-bar">
-
-    <a
-      id="mobileCall"
-      href="#"
-      class="mobile-action"
-    >
-      <span>☎</span>
-      <small>Call</small>
+    <a id="mobileCall" href="#" class="mobile-action">
+      <span>☎</span><small>Call</small>
     </a>
-
-
-    <a
-      id="mobileWhatsApp"
-      href="#"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mobile-action"
-    >
-      <span>◉</span>
-      <small>WhatsApp</small>
+    <a id="mobileWhatsApp" href="#" target="_blank" rel="noopener noreferrer" class="mobile-action">
+      <span>◉</span><small>WhatsApp</small>
     </a>
-
-
-    <!--
-      IMPORTANT:
-      This is also a direct link to the VCF.
-    -->
-
-    <a
-      id="mobileSaveContact"
-      class="mobile-action"
-      href="assets/contacts/parishar-rajbhandari.vcf"
-      download
-      aria-label="Save contact"
-    >
-      <span>＋</span>
-      <small>Save</small>
-    </a>
-
+    <button id="mobileSaveContact" class="mobile-action" type="button">
+      <span>＋</span><small>Save</small>
+    </button>
   </div>
 
-
-
-  <!-- Toast -->
-
-  <div
-    id="toast"
-    class="toast"
-    role="status"
-    aria-live="polite"
-  ></div>
-
-
-
-  <!-- JavaScript -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
-
 </body>
 </html>
